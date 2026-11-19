@@ -282,11 +282,11 @@ Como possibilidades de evolução, destacam-se:
 
 ## 🎥 Demonstração
 
-**Vídeo de apresentação:** INSERIR_LINK_DO_VIDEO
+**Vídeo de apresentação:** youtu.be/tYRKxMYu4NI
 
 ## 📄 Documentação
 
-**Documentação técnica e acadêmica:** INSERIR_LINK_DA_DOCUMENTACAO
+**Documentação técnica e acadêmica:** github.com/pl-gonzalez/FIAP-PORTFOLIO-AI/blob/master/1TIAO/GLOBAL-SOLUTION-1/docs/PabloGonzalez_rm567944.pdf
 
 ## 👥 Autoria
 
