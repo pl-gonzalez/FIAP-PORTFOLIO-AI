@@ -3,6 +3,8 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+
 
 from sklearn.ensemble import IsolationForest
 from sklearn.metrics import (
@@ -10,7 +12,10 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     f1_score,
+    confusion_matrix,
+    ConfusionMatrixDisplay
 )
+
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
 
@@ -272,6 +277,46 @@ def evaluate_model(model, validation_df):
         labels=[0, 1],
     )
 
+    # Rótulos reais da base de validação
+    y_true = validation_df["is_injected_anomaly"].astype(int)
+
+    # Previsões do Isolation Forest
+    predictions = model.predict(X_validation)
+
+    # Converte:
+    # -1 = anomalia (1)
+    #  1 = normal (0)
+    y_pred = np.where(predictions == -1, 1, 0)
+
+    # Calcula a matriz de confusão
+    cm = confusion_matrix(
+        y_true,
+        y_pred,
+        labels=[0, 1]
+    )
+
+    # Exibe a matriz
+    print("\nMatriz de Confusão:")
+    print(cm)
+
+    disp = ConfusionMatrixDisplay(
+    confusion_matrix=cm,
+    display_labels=["Normal", "Anomalia"]
+    )
+    
+    disp.plot(cmap="Blues", values_format="d")
+    
+    plt.title("Matriz de Confusão - Isolation Forest")
+    plt.tight_layout()
+    
+    plt.savefig(
+        "docs/images/matriz_confusao.png",
+        dpi=300,
+        bbox_inches="tight"
+    )
+    
+    plt.show()
+
     return results, precision, recall, f1, matrix
 
 
@@ -337,6 +382,7 @@ def main():
     print(f"Anomalias detectadas: {results['predicted_anomaly'].sum()}")
 
     print(f"\nResultados salvos em: {RESULT_FILE}")
+
 
 
 if __name__ == "__main__":

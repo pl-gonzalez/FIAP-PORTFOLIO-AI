@@ -18,11 +18,11 @@ O projeto possui duas funcionalidades principais:
 
 ### Dashboard — Monitoramento
 
-![Dashboard de Monitoramento](docs/images/monitoramento.png)
+![Dashboard de Monitoramento](docs/images/dashboard_monitoramento.png)
 
 ### Dashboard — Validação da IA
 
-![Dashboard de Validação da IA](docs/images/validacao-ia.png)
+![Dashboard de Validação da IA](docs\images\dashboard_validacao.png)
 
 ---
 
@@ -292,9 +292,9 @@ Como possibilidades de evolução, destacam-se:
 
 Projeto desenvolvido como parte do Global Solution 1 do curso de Tecnologia em Inteligência Artificial da FIAP.
 
-**Integrantes:** INSERIR_NOMES_COMPLETOS
+**Integrantes:** Pablo Leon Dimauro Gonzalez (RM 567944)
 
-**Turma:** INSERIR_TURMA
+**Turma:** 1TIAOR
 
 ---
 
