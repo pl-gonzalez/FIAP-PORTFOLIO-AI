@@ -1,0 +1,184 @@
+# Critérios de Validação do Dataset
+
+## 1. Objetivo
+
+Definir regras para verificar a integridade, consistência e qualidade dos dados recebidos pelo Fleet Intelligence.
+
+As validações devem reduzir erros nos indicadores financeiros, identificar informações incompletas e impedir que dados inválidos contaminem os resultados.
+
+## 2. Classificação das validações
+
+| Classificação | Comportamento esperado |
+|---|---|
+| Erro | Registro ou campo não pode ser utilizado no cálculo afetado até ser corrigido. |
+| Alerta | Registro pode ser mantido, mas precisa de revisão ou possui limitações. |
+| Informativo | Condição que deve ser comunicada ao usuário, sem bloquear o processamento. |
+
+A validação deverá ocorrer por registro e por indicador. Um problema em um campo não deve excluir automaticamente todas as informações válidas do registro.
+
+## 3. Validações estruturais
+
+| Campo | Regra | Classificação em caso de falha |
+|---|---|---|
+| `transaction_id` | Deve estar preenchido e ser único. | Erro |
+| `date_reference` | Deve conter uma data válida. | Erro |
+| `vehicle_id` | Deve estar preenchido e corresponder a um veículo cadastrado. | Erro |
+| `vehicle_type` | Deve pertencer a uma categoria padronizada de veículo. | Erro |
+| `category` | Deve pertencer à lista de categorias permitidas. | Erro |
+| `description` | Campo recomendado para contextualizar a despesa. | Alerta |
+| `amount_brl` | Deve ser numérico, obrigatório e maior ou igual a zero. | Erro |
+| `supplier` | Campo recomendado para rastreabilidade da despesa. | Alerta |
+| `source_format` | Deve identificar a origem ou formato do dado. | Alerta |
+| `data_quality` | Deve utilizar um dos estados padronizados. | Erro |
+
+### Valores permitidos
+
+**Categorias:**
+- Combustível
+- Manutenção
+- Pedágio
+- Multas
+- Impostos
+- Outras despesas
+
+**Qualidade dos dados:**
+- Completo
+- Incompleto
+- Revisar
+- Duplicado
+
+Os valores deverão ser padronizados antes de serem utilizados nos relatórios.
+
+## 4. Validações específicas de combustível
+
+Os campos abaixo são necessários para calcular a eficiência de consumo.
+
+| Campo | Regra | Classificação em caso de falha |
+|---|---|---|
+| `quantity_liters` | Obrigatório para registros de combustível e deve ser maior que zero. | Erro para cálculo de consumo |
+| `distance_km` | Obrigatório para calcular eficiência e deve ser maior que zero. | Erro para cálculo de eficiência |
+| `unit_price_brl` | Obrigatório para calcular o custo por litro e deve ser maior que zero. | Erro para cálculo de preço unitário |
+| `odometer_km` | Quando informado, deve ser maior ou igual a zero e coerente com a evolução do veículo. | Alerta |
+
+Para registros de outras categorias, os campos de litros, distância e preço por litro poderão permanecer vazios.
+
+### Verificações adicionais
+
+- Um registro de combustível não pode possuir quantidade de litros igual a zero.
+- A distância não pode ser negativa.
+- O preço por litro não pode ser negativo ou igual a zero.
+- A eficiência calculada deverá ser verificada quanto a valores atípicos.
+- A quilometragem do hodômetro deverá ser comparada com registros anteriores do mesmo veículo, quando disponíveis.
+
+Um hodômetro menor que o registro anterior deverá gerar alerta para investigação. A situação pode decorrer de erro de digitação, substituição do equipamento ou outra condição operacional.
+
+## 5. Integridade e duplicidade
+
+O sistema deverá verificar:
+
+1. Se existem identificadores de transação repetidos.
+2. Se existem registros com mesmo veículo, data, categoria, descrição e valor.
+3. Se existem despesas aparentemente duplicadas provenientes de arquivos diferentes.
+4. Se há veículos sem identificação ou sem correspondência no cadastro.
+
+O `transaction_id` repetido será considerado erro. Registros aparentemente duplicados por similaridade deverão ser classificados como alerta, pois despesas legítimas podem possuir os mesmos valores e características.
+
+O sistema não deverá excluir automaticamente registros apenas por serem semelhantes.
+
+## 6. Consistência financeira
+
+O sistema deverá verificar:
+
+- Se `amount_brl` é numérico e não negativo.
+- Se os valores monetários estão em formato consistente.
+- Se despesas de combustível possuem quantidade de litros e preço unitário.
+- Se o valor total da despesa apresenta divergência relevante em relação à quantidade multiplicada pelo preço unitário, quando ambos estiverem disponíveis.
+
+Para combustível, poderá ser utilizada a seguinte verificação:
+
+`valor_calculado = quantity_liters × unit_price_brl`
+
+A diferença entre o valor informado e o calculado deverá gerar alerta quando ultrapassar a tolerância definida de R$ 0,05.
+
+Essa regra é uma verificação de consistência, não uma substituição automática do valor original.
+
+## 7. Consistência temporal e operacional
+
+O sistema deverá verificar:
+
+- Se as datas estão em formato válido.
+- Se os registros pertencem ao período informado pelo usuário.
+- Se a quilometragem do hodômetro apresenta evolução coerente.
+- Se existem variações relevantes de consumo ou despesas entre períodos.
+- Se as comparações utilizam veículos ou grupos equivalentes.
+
+Variações de consumo, manutenção ou despesas não deverão ser classificadas automaticamente como erros. Elas devem ser tratadas como possíveis anomalias para investigação.
+
+## 8. Qualidade e completude
+
+Cada registro deverá receber uma classificação de qualidade.
+
+| Situação | Classificação sugerida |
+|---|---|
+| Campos obrigatórios válidos e dados consistentes | Completo |
+| Ausência de campo recomendado ou informação necessária para uma análise específica | Incompleto |
+| Divergência, valor suspeito ou inconsistência que exige conferência | Revisar |
+| Registro confirmado como duplicado | Duplicado |
+
+A classificação deverá refletir a condição real do registro. Um registro incompleto ainda poderá participar de cálculos para os quais possua todos os campos necessários.
+
+## 9. Critérios de aceitação do dataset
+
+O dataset será considerado apto para a primeira etapa de processamento quando atender aos seguintes critérios:
+
+| Critério | Resultado esperado |
+|---|---|
+| Estrutura | Todas as colunas esperadas estão presentes. |
+| Identificadores | Nenhum `transaction_id` vazio ou duplicado. |
+| Datas | Todos os registros possuem datas válidas. |
+| Veículos | Todos os registros possuem identificação válida de veículo. |
+| Categorias | Todos os registros utilizam categorias permitidas. |
+| Valores | Nenhum valor de despesa inválido ou negativo. |
+| Combustível | Registros utilizados no cálculo de eficiência possuem litros e distância válidos. |
+| Duplicidade | Duplicidades identificadas e classificadas. |
+| Completude | Campos ausentes identificados e reportados. |
+| Rastreabilidade | Origem dos dados preservada sempre que disponível. |
+
+**Regra de aprovação:** erros estruturais e financeiros devem ser corrigidos ou isolados antes dos cálculos que dependem deles. Alertas podem permanecer no dataset, desde que sejam identificados e apresentados ao usuário.
+
+## 10. Indicadores que dependem da qualidade dos dados
+
+| Indicador | Dados necessários |
+|---|---|
+| Custo total | `amount_brl` válido |
+| Custo por categoria | `amount_brl` e `category` válidos |
+| Custo por veículo | `amount_brl` e `vehicle_id` válidos |
+| Custo por quilômetro | Despesas do período e distância percorrida sem duplicação |
+| Consumo em L/100 km | `quantity_liters` e `distance_km` válidos |
+| Preço médio por litro | `amount_brl` e `quantity_liters` válidos, ou preço unitário validado |
+| Evolução mensal | Datas válidas e períodos comparáveis |
+| Detecção de anomalias | Variáveis válidas e quantidade suficiente de observações comparáveis |
+
+A distância percorrida não deverá ser somada repetidamente quando estiver replicada em diferentes categorias de despesa do mesmo veículo e período.
+
+## 11. Relatório de validação
+
+Ao finalizar o processamento, o sistema deverá apresentar:
+
+- Quantidade total de registros analisados.
+- Quantidade de registros válidos.
+- Quantidade de registros com erros.
+- Quantidade de registros com alertas.
+- Quantidade de registros incompletos.
+- Possíveis duplicidades.
+- Campos com maior incidência de ausência.
+- Indicadores que não puderam ser calculados.
+- Recomendações de correção ou complementação dos dados.
+
+## 12. Limitações
+
+A validação não comprova que uma despesa ocorreu de fato nem que o valor informado corresponde a uma nota fiscal ou transação real.
+
+A identificação de valores atípicos também não comprova desperdício. Os resultados devem ser tratados como sinais para investigação pelo Gestor de Frota.
+
+Os limites estatísticos de consumo e despesa deverão ser calibrados conforme a quantidade e a qualidade dos dados disponíveis. Não devem ser utilizados limites universais sem justificativa.
