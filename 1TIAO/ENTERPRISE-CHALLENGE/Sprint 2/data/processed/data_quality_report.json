@@ -1,0 +1,18 @@
+{
+    "source_files": [
+        "fleet_intelligence_dataset.csv",
+        "fleet_registry.csv"
+    ],
+    "expense_records": 194,
+    "registered_vehicles": 12,
+    "integrated_records": 194,
+    "records_ok": 194,
+    "records_to_review": 0,
+    "issues_by_type": {},
+    "notes": [
+        "A integração usa vehicle_id como chave.",
+        "O relacionamento esperado é muitos lançamentos para um veículo.",
+        "Registros com inconsistências são mantidos e sinalizados; não são apagados automaticamente.",
+        "A quilometragem não deve ser somada diretamente entre linhas de despesas."
+    ]
+}

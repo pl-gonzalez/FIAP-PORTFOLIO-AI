@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "author": "Fleet Intelligence",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-esp32-devkit-v1",
+      "id": "esp",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "potSpeed",
+      "top": -120,
+      "left": 250,
+      "attrs": {
+        "value": "0"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "potRpm",
+      "top": -40,
+      "left": 250,
+      "attrs": {
+        "value": "0"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "potFuel",
+      "top": 40,
+      "left": 250,
+      "attrs": {
+        "value": "0"
+      }
+    },
+    {
+      "type": "wokwi-potentiometer",
+      "id": "potTemp",
+      "top": 120,
+      "left": 250,
+      "attrs": {
+        "value": "0"
+      }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led",
+      "top": 180,
+      "left": 250,
+      "attrs": {
+        "color": "red"
+      }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 180,
+      "left": 320,
+      "attrs": {
+        "value": "220"
+      }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz",
+      "top": 250,
+      "left": 250,
+      "attrs": {
+        "volume": "0.1"
+      }
+    }
+  ],
+  "connections": [
+    [
+      "esp:3V3",
+      "potSpeed:VCC",
+      "red",
+      []
+    ],
+    [
+      "esp:GND.1",
+      "potSpeed:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:34",
+      "potSpeed:SIG",
+      "green",
+      []
+    ],
+    [
+      "esp:3V3",
+      "potRpm:VCC",
+      "red",
+      []
+    ],
+    [
+      "esp:GND.1",
+      "potRpm:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:35",
+      "potRpm:SIG",
+      "green",
+      []
+    ],
+    [
+      "esp:3V3",
+      "potFuel:VCC",
+      "red",
+      []
+    ],
+    [
+      "esp:GND.1",
+      "potFuel:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:32",
+      "potFuel:SIG",
+      "green",
+      []
+    ],
+    [
+      "esp:3V3",
+      "potTemp:VCC",
+      "red",
+      []
+    ],
+    [
+      "esp:GND.1",
+      "potTemp:GND",
+      "black",
+      []
+    ],
+    [
+      "esp:33",
+      "potTemp:SIG",
+      "green",
+      []
+    ],
+    [
+      "esp:2",
+      "led:A",
+      "green",
+      []
+    ],
+    [
+      "led:C",
+      "r1:1",
+      "green",
+      []
+    ],
+    [
+      "r1:2",
+      "esp:GND.1",
+      "black",
+      []
+    ],
+    [
+      "esp:25",
+      "bz:1",
+      "green",
+      []
+    ],
+    [
+      "bz:2",
+      "esp:GND.1",
+      "black",
+      []
+    ]
+  ],
+  "dependencies": {}
+}

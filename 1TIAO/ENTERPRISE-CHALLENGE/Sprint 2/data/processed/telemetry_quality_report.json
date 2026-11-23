@@ -1,0 +1,18 @@
+{
+    "source_file": "telemetry.csv",
+    "records_received": 17,
+    "vehicles": [
+        "V007"
+    ],
+    "simulations": [
+        "WOKWI_V007_001"
+    ],
+    "records_ok": 17,
+    "records_review": 0,
+    "issue_count": 0,
+    "alerts_summary": {
+        "NONE": 12,
+        "HIGH_RPM|HIGH_ENGINE_TEMP": 5
+    },
+    "note": "Telemetria sintética gerada no Wokwi. Não representa medições reais do veículo. A associação a V007 é um identificador de teste."
+}

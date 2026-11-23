@@ -1,0 +1,7 @@
+{
+    "total_test_vehicles": 4,
+    "agreements": 1,
+    "divergences": 3,
+    "agreement_rate_pct": 25.0,
+    "interpretation": "A comparação mede a concordância do modelo com as regras de diagnóstico. Não representa uma validação independente da eficiência real dos veículos."
+}

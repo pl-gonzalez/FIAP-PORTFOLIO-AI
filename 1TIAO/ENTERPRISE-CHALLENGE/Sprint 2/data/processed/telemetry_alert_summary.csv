@@ -1,0 +1,3 @@
+vehicle_id,simulation_id,alert,occurrences
+V007,WOKWI_V007_001,HIGH_ENGINE_TEMP,5
+V007,WOKWI_V007_001,HIGH_RPM,5

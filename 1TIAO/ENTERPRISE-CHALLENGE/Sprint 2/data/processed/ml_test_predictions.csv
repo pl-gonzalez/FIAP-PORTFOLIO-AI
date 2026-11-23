@@ -1,0 +1,5 @@
+﻿vehicle_id,efficiency_class,predicted_class,correct_prediction
+V005,ATENÇÃO,EFICIENTE,False
+V006,ATENÇÃO,INEFICIENTE,False
+V012,EFICIENTE,EFICIENTE,True
+V007,INEFICIENTE,EFICIENTE,False

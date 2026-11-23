@@ -1,0 +1,2 @@
+vehicle_id,simulation_id,total_readings,avg_speed_kmh,max_speed_kmh,avg_rpm,max_rpm,avg_fuel_pct,avg_engine_temp_c,max_engine_temp_c,alert_readings,alert_rate_pct
+V007,WOKWI_V007_001,17,101.6470588235294,120,4484.470588235294,5609,51.529411764705884,102.05882352941177,126,5,29.411764705882355

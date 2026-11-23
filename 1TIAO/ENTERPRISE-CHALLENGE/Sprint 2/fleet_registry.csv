@@ -1,0 +1,13 @@
+﻿vehicle_id,vehicle_type,operation_profile,benchmark_group,profile_description,data_origin
+V001,Utilitário leve,Urbana,utilitário_leve,"Operação predominantemente urbana, com trajetos curtos e paradas frequentes.",Simulado para fins acadêmicos — Sprint 2
+V002,Utilitário leve,Urbana,utilitário_leve,"Operação predominantemente urbana, com trajetos curtos e paradas frequentes.",Simulado para fins acadêmicos — Sprint 2
+V003,Utilitário leve,Mista,utilitário_leve,Operação combinando trajetos urbanos e rodoviários.,Simulado para fins acadêmicos — Sprint 2
+V004,Utilitário leve,Urbana,utilitário_leve,"Operação predominantemente urbana, com trajetos curtos e paradas frequentes.",Simulado para fins acadêmicos — Sprint 2
+V005,Utilitário leve,Mista,utilitário_leve,Operação combinando trajetos urbanos e rodoviários.,Simulado para fins acadêmicos — Sprint 2
+V006,Automóvel,Urbana,automóvel,Deslocamentos majoritariamente urbanos.,Simulado para fins acadêmicos — Sprint 2
+V007,Automóvel,Mista,automóvel,Deslocamentos urbanos e rodoviários em proporções variadas.,Simulado para fins acadêmicos — Sprint 2
+V008,Automóvel,Urbana,automóvel,Deslocamentos majoritariamente urbanos.,Simulado para fins acadêmicos — Sprint 2
+V009,Automóvel,Mista,automóvel,Deslocamentos urbanos e rodoviários em proporções variadas.,Simulado para fins acadêmicos — Sprint 2
+V010,Caminhão,Rodoviária,caminhão,"Operação predominantemente rodoviária, com percursos mais longos.",Simulado para fins acadêmicos — Sprint 2
+V011,Caminhão,Rodoviária,caminhão,"Operação predominantemente rodoviária, com percursos mais longos.",Simulado para fins acadêmicos — Sprint 2
+V012,Caminhão,Mista,caminhão,Operação combinando transporte rodoviário e deslocamentos urbanos.,Simulado para fins acadêmicos — Sprint 2
